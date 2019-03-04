@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ConvoTracker</string>
+
+    <!--Some strings used by the app. -->
+
+    <string name="notification_text">Currently tracking, tap to stop</string>
+
+    <string name="users_name" translatable="false">Ozan Gokdemir</string>
+    <string name="firebase_path" translatable="false">locations</string>
+    <string name="firebase_email" translatable="false">ozan.gokdemir15@ncf.edu</string>
+    <string name="firebase_password" translatable="false">199601</string>
+</resources>
