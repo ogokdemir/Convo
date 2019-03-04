@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ConvoMap</string>
+    <string name="title_activity_display">Map</string>
+
+    <string name="users_name" translatable="false">Ozan Gokdemir</string>
+    <string name="firebase_path" translatable="false">locations</string>
+    <string name="firebase_email" translatable="false">ozan.gokdemir15@ncf.edu</string>
+    <string name="firebase_password" translatable="false">199601</string>
+
+</resources>
