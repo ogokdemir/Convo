@@ -132,8 +132,12 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
 
         //LatLng is similar to a Python tuple, it's specifically for (lat, lng) as the name suggests.
         LatLng location = new LatLng(lat, lng);
+
+        //If a new user got online, add a new marker with their location.
         if (!mMarkers.containsKey(key)) {
             mMarkers.put(key, mMap.addMarker(new MarkerOptions().title(key).position(location)));
+
+           //If the location of an already online user (marker) is updated, just set the marker to new location.
         } else {
             mMarkers.get(key).setPosition(location);
         }
@@ -144,5 +148,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
             builder.include(marker.getPosition());
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300));
+
     }
+
 }
