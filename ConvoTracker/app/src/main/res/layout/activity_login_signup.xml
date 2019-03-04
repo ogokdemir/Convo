@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginSignupActivity"
+    android:padding="20dp"
+    android:baselineAligned="false"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do you already have a Convo account?"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_signin_user_email"
+            android:hint="Please enter your email"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"
+            />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_signin_user_password"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:hint="Please enter your password"
+            android:inputType="textPassword"
+
+            />
+
+        <TextView
+            android:id="@+id/tw_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textSize="22sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:clickable="true"
+            android:onClick="signInWithFirebase"
+
+            />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tw_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="New to Convo? Please sign up"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+
+        />
+
+</RelativeLayout>

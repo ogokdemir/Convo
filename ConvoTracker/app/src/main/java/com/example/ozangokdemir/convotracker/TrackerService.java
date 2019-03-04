@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 public class TrackerService extends Service {
 
+
     private static final String TAG = TrackerService.class.getSimpleName();
 
     @Override
