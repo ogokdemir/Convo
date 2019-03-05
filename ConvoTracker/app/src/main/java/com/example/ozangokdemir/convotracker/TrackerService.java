@@ -2,6 +2,7 @@ package com.example.ozangokdemir.convotracker;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,19 +34,48 @@ import android.widget.Toast;
 
 public class TrackerService extends Service {
 
-
     private static final String TAG = TrackerService.class.getSimpleName();
+    public static final String INTENT_RECEIVE_CODE = "99";
+    String mEmail, mPassword;
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    public IBinder onBind(Intent intent) {return null;}
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         buildNotification();
+
+
+    }
+
+    /*
+    This is called when an intent starts this service. In this context, this intent comes from the TrackerActivity
+    and passes this service an email and a password to be used in the Firebase.
+     */
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        Log.i(TAG, "onStartCommand called.");
+
+        Bundle received = intent.getExtras();
+        String[] emailpassword = received.getStringArray(INTENT_RECEIVE_CODE);
+
+        mEmail = emailpassword[0];
+        mPassword = emailpassword[1];
+
+        Log.i(TAG, "did the array arrive: "+ String.valueOf(emailpassword==null));
+        Log.i(TAG, "Email: "+ emailpassword[0]);
+        Log.i(TAG, "Password: "+ emailpassword[1]);
+
         loginToFirebase();
+
+        return super.onStartCommand(intent, flags, startId);
+
+
     }
 
     private void buildNotification() {
@@ -84,17 +114,14 @@ public class TrackerService extends Service {
          * These should be asked from the user in the beginning instead of being hardcoded in the strings.xml file.
          * There should also be a signup functionality that'll add a user entity to the firebase app.
          */
-        String email = getString(R.string.firebase_email);
-        String password = getString(R.string.firebase_password);
-
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "firebase auth success");
-                    Toast.makeText(TrackerService.this, "successful login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrackerService.this, "Success, tracker activated!", Toast.LENGTH_SHORT).show();
                     requestLocationUpdates();
                 } else {
                     Log.d(TAG, "firebase auth failed");
@@ -110,8 +137,11 @@ public class TrackerService extends Service {
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); //use both the GPS and Wifi, Blueetooth for best accuracy.
         FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
 
-        //here the is actually the users name.
-        final String path = getString(R.string.firebase_path) + "/" + getString(R.string.users_name);
+        /**
+         * Another problem is getting the user's name. For now, I will use their email as the key and display that on the map icon.
+         */
+
+        final String path = getString(R.string.firebase_path) + "/" + extractUsersNameFromNcfEmail(mEmail);
 
         //did the user grant location tracking permission to the app?
         int permission = ContextCompat.checkSelfPermission(this,
@@ -139,5 +169,20 @@ public class TrackerService extends Service {
                 }
             }, null);
         }
+    }
+
+    /**
+     * @param email NCF email address of the user.
+     * @return extracts their name and last name from the NCF email address and returns it.
+     */
+    private String extractUsersNameFromNcfEmail(String email){
+        String[] chunks = email.split("@");
+        String[] fNamelName = chunks[0].split("\\.");
+
+        String firstName = fNamelName[0].substring(0,1).toUpperCase()+fNamelName[0].substring(1);
+        String lastName =  fNamelName[1].substring(0,1).toUpperCase()+fNamelName[1].substring(1,fNamelName[1].length()-2);
+
+        return firstName+" "+lastName;
+
     }
 }

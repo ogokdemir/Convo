@@ -10,15 +10,25 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 public class TrackerActivity extends Activity {
 
+    private static final String TAG = TrackerActivity.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST = 1;
+    public static final String INTENT_RECEIVE_CODE = "0";
+    String[] mEmailPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Retrieve the user email and password from the LoginSignupActivity.
+
+        Bundle fromLogin = getIntent().getExtras();
+        mEmailPassword = fromLogin.getStringArray(INTENT_RECEIVE_CODE);
+
 
         // Check GPS is enabled
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -41,7 +51,15 @@ public class TrackerActivity extends Activity {
     }
 
     private void startTrackerService() {
-        startService(new Intent(this, TrackerService.class));
+
+        //Pass the user's email and password to the service. It will use it for communicating the location to the Firebase database.
+        Intent startServiceIntent = new Intent(this, TrackerService.class);
+        Bundle box = new Bundle();
+        box.putStringArray(TrackerService.INTENT_RECEIVE_CODE, mEmailPassword);
+        startServiceIntent.putExtras(box);
+        startService(startServiceIntent);
+
+        //Shut down this activity, it is not needed once the service starts.
         finish();
     }
 

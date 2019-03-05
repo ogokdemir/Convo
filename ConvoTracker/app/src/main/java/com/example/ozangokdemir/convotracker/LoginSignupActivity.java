@@ -39,50 +39,59 @@ public class LoginSignupActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        //If the user is currently signed in, directly move on the tracker activity.
-        if(currentUser != null){
-            Intent toTrackerActivity = new Intent (this, TrackerActivity.class);
-            startActivity(toTrackerActivity);
-        }
-
-        else{
-            //if the user is not signed in, don't do anything because the activity already asks them to sign in.
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        mAuth.signOut();
     }
-
 
     private void signInWithFirebase(){
 
-        String email = mEtEmail.getText().toString();
-        String password = mEtPassword.getText().toString();
+        final String email = mEtEmail.getText().toString();
+        final String password = mEtPassword.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, direct the user to the TrackerActivity which will publish their location.
-                            Log.d(TAG, "signInWithEmail:success");
+        if (email.isEmpty() || password.isEmpty()){
+            Toast.makeText(this, "Please enter your email and password to activate tracking"
+                    ,Toast.LENGTH_SHORT).show();
+        }
 
-                            Intent toTrackerActivity = new Intent(LoginSignupActivity.this, TrackerActivity.class);
-                            startActivity(toTrackerActivity);
+        else {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, direct the user to the TrackerActivity which will publish their location.
+                                Log.d(TAG, "signInWithEmail:success");
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginSignupActivity.this, "Hmm..Are you sure you already signed up?",
-                                    Toast.LENGTH_SHORT).show();
+                                Intent toTrackerActivity = new Intent(LoginSignupActivity.this, TrackerActivity.class);
+                                String[] emailAndPassword = new String[2];
+
+                            /*
+                            Sending the user's email and password to the tracker activity so updates on their location is entered
+                            on the Firebase Realtime Database.
+
+                            */
+                                emailAndPassword[0] = email;
+                                emailAndPassword[1] = password;
+                                Bundle packageForTrackerActivity = new Bundle();
+                                packageForTrackerActivity.putStringArray(TrackerActivity.INTENT_RECEIVE_CODE, emailAndPassword);
+                                toTrackerActivity.putExtras(packageForTrackerActivity);
+
+                                startActivity(toTrackerActivity);
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginSignupActivity.this, "Hmm.. Are you sure you already signed up?",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            // ...
                         }
-
-                        // ...
-                    }
-                });
+                    });
+        }
     }
 
 
