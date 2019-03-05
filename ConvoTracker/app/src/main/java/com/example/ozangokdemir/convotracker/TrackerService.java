@@ -44,17 +44,13 @@ public class TrackerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         buildNotification();
-
-
     }
 
     /*
     This is called when an intent starts this service. In this context, this intent comes from the TrackerActivity
     and passes this service an email and a password to be used in the Firebase.
      */
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -74,7 +70,6 @@ public class TrackerService extends Service {
         loginToFirebase();
 
         return super.onStartCommand(intent, flags, startId);
-
 
     }
 
@@ -109,11 +104,6 @@ public class TrackerService extends Service {
 
     private void loginToFirebase() {
         // Authenticate with Firebase, and request location updates
-
-        /**
-         * These should be asked from the user in the beginning instead of being hardcoded in the strings.xml file.
-         * There should also be a signup functionality that'll add a user entity to the firebase app.
-         */
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(
                 mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
