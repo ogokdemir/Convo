@@ -84,7 +84,7 @@ public class LoginSignupActivity extends AppCompatActivity implements View.OnCli
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LoginSignupActivity.this, "Hmm.. Are you sure you already signed up?",
+                                Toast.makeText(LoginSignupActivity.this, "Hmm.. Sign in failed, please check your email and password.",
                                         Toast.LENGTH_SHORT).show();
                             }
 

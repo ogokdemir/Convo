@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity"
+    tools:context=".LoginActivity"
     android:padding="20dp"
     android:baselineAligned="false"
     >
@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome to Convo, Let's create an account for you!"
+            android:text="Welcome! Please sign in with your Convo account."
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="22sp"
@@ -27,8 +27,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_signup_user_email"
-            android:hint="Please enter your ncf email"
+            android:id="@+id/et_signin_user_email"
+            android:hint="Please enter your ncf email address..."
             android:textColorHint="@color/colorPrimaryDark"
             android:layout_marginBottom="10dp"
             />
@@ -37,18 +37,18 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_signup_user_password"
+            android:id="@+id/et_signin_user_password"
             android:textColorHint="@color/colorPrimaryDark"
-            android:hint="Please create a password"
+            android:hint="Please enter your password"
             android:inputType="textPassword"
 
             />
 
         <TextView
-            android:id="@+id/tw_sign_up_complete"
+            android:id="@+id/tw_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:textSize="22sp"
             android:layout_gravity="center"
             android:gravity="center"
@@ -58,7 +58,6 @@
             android:textStyle="bold"
             android:padding="8dp"
             android:clickable="true"
-            android:onClick="onSignupTapped"
 
             />
 
