@@ -5,6 +5,7 @@
 
     <string name="notification_text">Currently tracking, tap to stop</string>
     <string name="firebase_path" translatable="false">locations</string>
-
+    <string name="shared_prefs_key" translatable="false">login_credentials</string>
+    <string name="email_cache_key" translatable="false">cached_email_key</string>
 
 </resources>

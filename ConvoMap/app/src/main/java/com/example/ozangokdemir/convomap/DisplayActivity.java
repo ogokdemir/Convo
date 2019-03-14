@@ -1,5 +1,6 @@
 package com.example.ozangokdemir.convomap;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,9 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
     private static final String TAG = DisplayActivity.class.getSimpleName();
     private HashMap<String, Marker> mMarkers = new HashMap<>(); // maps the marker to the location it represents.
     private GoogleMap mMap;
+    public static final String INTENT_RECEIVE_KEY = "mjollnir";
+
+    String mEmail, mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,11 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+        Intent starter = getIntent();
+        String[] passedPackage = starter.getExtras().getStringArray(INTENT_RECEIVE_KEY);
+        mEmail = passedPackage[0];
+        mPassword = passedPackage[1];
 
     }
 
@@ -53,13 +62,11 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
 
 
     private void loginToFirebase() {
-        String email = getString(R.string.firebase_email); // again I must be asking the user.
-        String password = getString(R.string.firebase_password); // again, I must be asking the user.
+
 
         // Authenticate with Firebase and subscribe to updates
-
         FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             //If the app successfully authenticated the user
             public void onComplete(Task<AuthResult> task) {
