@@ -59,8 +59,8 @@ public class TrackerActivity extends Activity {
         startServiceIntent.putExtras(box);
         startService(startServiceIntent);
 
-        //Shut down this activity, it is not needed once the service starts.
         finish();
+
     }
 
     @Override
@@ -71,6 +71,7 @@ public class TrackerActivity extends Activity {
             // Start the service when the permission is granted
             startTrackerService();
         } else {
+            Toast.makeText(this, "Convo can't operate without your permission to track you", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

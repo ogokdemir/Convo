@@ -58,6 +58,12 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         mMap = googleMap;
         mMap.setMaxZoomPreference(16);
         loginToFirebase();
+
+        if(mMarkers.size() == 0){
+            Toast.makeText(this,
+                    "No active users, how about being the first one? Just activate your tracker!", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
@@ -95,6 +101,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
             //Called when a new user just become online.
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+
                 setMarker(dataSnapshot);
             }
 
@@ -111,7 +118,24 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
             //When a user goes offline, removes their map icon from the map.
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                setMarker(dataSnapshot);
+
+                //Remove the logged off user from the markers list.
+                mMarkers.remove(dataSnapshot.getKey());
+
+                //populate the map with the new markers list (if there are any active users.)
+                if(mMarkers.size()!=0){
+                    for(Marker marker: mMarkers.values())
+                        mMap.addMarker(new MarkerOptions().title(marker.getTitle()).position(marker.getPosition()));
+
+                }
+                //if nobody is active, notify the user and encourage them to be the first one.
+                else{
+                        Toast.makeText(DisplayActivity.this,
+                                "No active users, how about being the first one? Just activate your tracker!", Toast.LENGTH_LONG).show();
+                        mMap.clear();
+                    }
+
+
             }
 
             @Override

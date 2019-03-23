@@ -3,6 +3,7 @@ package com.example.ozangokdemir.convotracker;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -27,6 +28,14 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Todo
+ * in requestLocationUpdates method, there is a DatabaseReference object.
+ * define it for the whole class, then used that reference to remove the entry for the currently active user.
+ * This should work just fine.
+ *
+ */
+
 
 public class TrackerService extends Service {
 
@@ -34,6 +43,7 @@ public class TrackerService extends Service {
     public static final String INTENT_RECEIVE_CODE = "99";
     String mEmail, mPassword;
     FirebaseAuth mAuth;
+    Boolean isTrackingStopped;
 
     @Override
     public IBinder onBind(Intent intent) {return null;}
@@ -53,6 +63,8 @@ public class TrackerService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        isTrackingStopped = false;
 
         Bundle received = intent.getExtras();
         String[] emailpassword = received.getStringArray(INTENT_RECEIVE_CODE);
@@ -95,8 +107,17 @@ public class TrackerService extends Service {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "received stop broadcast");
             // Stop the service when the notification is tapped
+
+            isTrackingStopped = true;
+
             unregisterReceiver(stopReceiver);
             stopSelf();
+
+            removeUserLocation(extractUsersNameFromNcfEmail(mEmail));
+
+
+
+
 
             /**
              * Here I should add the code to remove the reference to the firebase database.
@@ -105,9 +126,6 @@ public class TrackerService extends Service {
              * Write log tests to see whether mAuth.getCurrent user returns a name and last name. If it does,
              * use that to delete this entry from the firebase database.
              */
-
-
-
 
         }
     };
@@ -160,7 +178,7 @@ public class TrackerService extends Service {
                     Location location = locationResult.getLastLocation();
 
                     //if the location is not null, i.e., the location manager actually gave us some data.
-                    if (location != null) {
+                    if (location != null && !isTrackingStopped) {
                         Log.d(TAG, "location update " + location);
 
                         //set the value of the location path in the realtime database to the latest location.
@@ -171,6 +189,34 @@ public class TrackerService extends Service {
             }, null);
         }
     }
+
+    /**
+     * When the user stops the tracker, deletes their entry from the database so their map marker disappears (with 10 seconds delay)
+     */
+    private void removeUserLocation(String name){
+
+       final String path = getString(R.string.firebase_path) + "/" ;
+
+       final DatabaseReference ref = FirebaseDatabase.getInstance().getReference(path);
+
+       ref.child(name).removeValue();
+
+       /**
+       //Delete the record 10 seconds after the user stops tracking. This prevents the last update from re-creating the user's entry.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                ref.removeValue();
+            }
+
+        }, 20000);
+*/
+
+    }
+
+
 
     /**
      * This should probably be in a util class but let it stay around for now. Extracts name and last name from ncf email as key to Firebase.
