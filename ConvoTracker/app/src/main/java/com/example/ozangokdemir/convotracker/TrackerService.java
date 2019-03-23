@@ -28,15 +28,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * Todo
- * in requestLocationUpdates method, there is a DatabaseReference object.
- * define it for the whole class, then used that reference to remove the entry for the currently active user.
- * This should work just fine.
- *
- */
-
-
 public class TrackerService extends Service {
 
     private static final String TAG = TrackerService.class.getSimpleName();
@@ -201,18 +192,7 @@ public class TrackerService extends Service {
 
        ref.child(name).removeValue();
 
-       /**
-       //Delete the record 10 seconds after the user stops tracking. This prevents the last update from re-creating the user's entry.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                ref.removeValue();
-            }
-
-        }, 20000);
-*/
 
     }
 
