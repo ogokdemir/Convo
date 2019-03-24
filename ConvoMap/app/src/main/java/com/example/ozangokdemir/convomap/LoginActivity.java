@@ -92,6 +92,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editor.commit();
 
 
+                                //second, start the UserStatusService.
+                                Intent startUserStatusService = new Intent(LoginActivity.this, UserStatusService.class);
+                                startService(startUserStatusService);
+
                                 //now take the user to the display activity map. pass the email and password to DisplayActivity, too.
                                 Intent toDisplayActivity = new Intent(LoginActivity.this, DisplayActivity.class);
                                 String[] emailAndPassword = {email, password};

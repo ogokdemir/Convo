@@ -103,17 +103,9 @@ public class TrackerService extends Service {
 
             unregisterReceiver(stopReceiver);
             stopSelf();
+
+            //Deletes the user's location entry from the database because they just stopped the tracker.
             removeUserLocation(extractUsersNameFromNcfEmail(mEmail));
-
-
-
-            /**
-             * Here I should add the code to remove the reference to the firebase database.
-             * The entry on the Firebase database must be deleted.
-             *
-             * Write log tests to see whether mAuth.getCurrent user returns a name and last name. If it does,
-             * use that to delete this entry from the firebase database.
-             */
 
         }
     };

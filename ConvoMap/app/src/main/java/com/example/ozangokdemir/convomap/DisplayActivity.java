@@ -102,7 +102,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
 
-                NotificationUtils.notifyUserSomebodyBecomeActive(dataSnapshot.getKey(), DisplayActivity.this);
+                //NotificationUtils.notifyUserSomebodyBecomeActive(dataSnapshot.getKey(), DisplayActivity.this);
                 setMarker(dataSnapshot);
             }
 
