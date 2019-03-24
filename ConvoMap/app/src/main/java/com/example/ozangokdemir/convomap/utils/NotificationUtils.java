@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-
-import com.example.ozangokdemir.convomap.DisplayActivity;
 import com.example.ozangokdemir.convomap.LoginActivity;
 import com.example.ozangokdemir.convomap.R;
 
