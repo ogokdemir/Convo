@@ -1,11 +1,15 @@
 package com.example.ozangokdemir.convomap;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.ozangokdemir.convomap.utils.NotificationUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -98,6 +102,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
 
+                NotificationUtils.notifyUserSomebodyBecomeActive(dataSnapshot.getKey(), DisplayActivity.this);
                 setMarker(dataSnapshot);
             }
 
@@ -178,12 +183,8 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
-    /**
-     * This method notifies this user that another user just became active. It even shares their name!
-     */
-    private void notifyUserSomebodyBecomeActive(){
-
-    }
-
 
 }
+
+
+
