@@ -59,11 +59,6 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         mMap.setMaxZoomPreference(16);
         loginToFirebase();
 
-        if(mMarkers.size() == 0){
-            Toast.makeText(this,
-                    "No active users, how about being the first one? Just activate your tracker!", Toast.LENGTH_LONG).show();
-        }
-
     }
 
 
@@ -79,6 +74,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
                 if (task.isSuccessful()) {
 
                     subscribeToUpdates(); //subcribe to the database so that the map dipslays their locations.
+
 
                     Toast.makeText(DisplayActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "firebase auth success");
@@ -181,5 +177,13 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300));
 
     }
+
+    /**
+     * This method notifies this user that another user just became active. It even shares their name!
+     */
+    private void notifyUserSomebodyBecomeActive(){
+
+    }
+
 
 }

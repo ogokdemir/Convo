@@ -103,10 +103,7 @@ public class TrackerService extends Service {
 
             unregisterReceiver(stopReceiver);
             stopSelf();
-
             removeUserLocation(extractUsersNameFromNcfEmail(mEmail));
-
-
 
 
 
@@ -183,19 +180,14 @@ public class TrackerService extends Service {
 
     /**
      * When the user stops the tracker, deletes their entry from the database so their map marker disappears (with 10 seconds delay)
+     * @param name of the user who just signed out.
      */
     private void removeUserLocation(String name){
-
        final String path = getString(R.string.firebase_path) + "/" ;
-
        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference(path);
-
        ref.child(name).removeValue();
 
-
-
     }
-
 
 
     /**
