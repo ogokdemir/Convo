@@ -3,8 +3,11 @@ package com.example.ozangokdemir.convomap;
 
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import com.example.ozangokdemir.convomap.utils.FirebaseUtils;
 import com.example.ozangokdemir.convomap.utils.MapUtils;
@@ -23,6 +26,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
     public static final String INTENT_RECEIVE_KEY = "mjollnir";
     private FirebaseUtils firebaseUtils; // a class that I wrote for keeping the firebase outside of the activity.
     String mEmail, mPassword;
+    FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,16 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         String[] passedPackage = starter.getExtras().getStringArray(INTENT_RECEIVE_KEY);
         mEmail = passedPackage[0];
         mPassword = passedPackage[1];
+
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.surveymonkey.com/r/LBTBRQS"); // the url for the post-conversation survey.
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
     }
 
