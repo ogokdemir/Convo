@@ -60,7 +60,8 @@ public class FirebaseUtils {
                     subscribeToUpdates(); //subcribe to the database so that the map dipslays their locations.
 
 
-                    Toast.makeText(mContext, "Success!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Tap on the person you want to chat with and use the blue arrow icon on the bottom right!",
+                            Toast.LENGTH_LONG).show();
                     Log.d(TAG, "firebase auth success");
                 } else {
                     Log.d(TAG, "firebase auth failed");
@@ -125,6 +126,19 @@ public class FirebaseUtils {
                 Log.d(TAG, "Failed to read value.", error.toException());
             }
         });
+    }
+
+    /**
+     * This should probably be in a util class but let it stay around for now. Extracts name and last name from ncf email as key to Firebase.
+     * @param email NCF email address of the user.
+     * @return extracts their name and last name from the NCF email address and returns it.
+     */
+    public static String extractUsersNameFromNcfEmail(String email){
+        String[] chunks = email.split("@");
+        String[] fNamelName = chunks[0].split("\\.");
+        String firstName = fNamelName[0].substring(0,1).toUpperCase()+fNamelName[0].substring(1);
+        String lastName =  fNamelName[1].substring(0,1).toUpperCase()+fNamelName[1].substring(1,fNamelName[1].length()-2);
+        return firstName+" "+lastName;
     }
 
 }

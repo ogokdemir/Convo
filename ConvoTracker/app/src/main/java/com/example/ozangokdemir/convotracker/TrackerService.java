@@ -1,7 +1,9 @@
 package com.example.ozangokdemir.convotracker;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -150,6 +152,7 @@ public class TrackerService extends Service {
             // Request location updates and when an update is
             // received, store the location in Firebase
             client.requestLocationUpdates(request, new LocationCallback() {
+                @SuppressLint("MissingPermission")
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     //access the firebase database that this app is connected to via the path (which is location).

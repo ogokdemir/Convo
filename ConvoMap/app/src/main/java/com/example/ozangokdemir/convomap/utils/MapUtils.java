@@ -24,7 +24,6 @@ public class MapUtils {
         // for locations received, so that we can build the
         // boundaries required to show them all on the map at once
 
-
         String key = dataSnapshot.getKey(); // key is the user's name.
 
         //Parse the data into an hashmap. String --> user name, Object --> contains all the other attributes of the user entry.
@@ -53,5 +52,17 @@ public class MapUtils {
         }
         map.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300));
 
+    }
+
+    /**
+     * Helper method for converting the distance in meters to miles.
+     *
+     * @param distInMeters Distance in meters.
+     * @return distance in meters converted to miles. type: double
+     */
+    public static double distMeterstoMiles(float distInMeters){
+        double dist = distInMeters*0.000621371192; //convert the distance to miles.
+        double roundOff = Math.round(dist * 100.0) / 100.0; // round the distance up to two decimal digits.
+        return roundOff;
     }
 }
