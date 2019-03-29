@@ -57,7 +57,7 @@ public class FirebaseUtils {
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
-                    subscribeToUpdates(); //subcribe to the database so that the map dipslays their locations.
+                    subscribeToUpdates(mEmail); //subcribe to the database so that the map dipslays their locations.
 
 
                     Toast.makeText(mContext, "Tap on the person you want to chat with and use the blue arrow icon on the bottom right!",
@@ -75,8 +75,9 @@ public class FirebaseUtils {
 
     /**
      * Starts observing the database and updates the map accordingly.
+     * @param email takes the email from the loginToFirebase method and passes it along to the MapUtils.setMarker method.
      */
-    public void subscribeToUpdates() {
+    public void subscribeToUpdates(final String email) {
 
         //get a hold of the firebase database so that we can subscribe to changes in the location.
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(mContext.getString(R.string.firebase_path));
@@ -87,13 +88,13 @@ public class FirebaseUtils {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
 
-                MapUtils.setMarker(dataSnapshot, mMarkers, mMap);
+                MapUtils.setMarker(dataSnapshot, mMarkers, mMap, email);
             }
 
             //Updated every tine a user's location changes. Everyone is notified.
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                MapUtils.setMarker(dataSnapshot, mMarkers, mMap);
+                MapUtils.setMarker(dataSnapshot, mMarkers, mMap, email);
             }
 
             @Override

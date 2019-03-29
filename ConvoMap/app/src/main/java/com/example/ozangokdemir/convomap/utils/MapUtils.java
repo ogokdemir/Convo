@@ -2,6 +2,7 @@ package com.example.ozangokdemir.convomap.utils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -17,8 +18,9 @@ public class MapUtils {
      * @param dataSnapshot the datasnapshot that the firebase database listener returns.
      * @param markers a hashmap of keys and titles.
      * @param map the google map object.
+     * @param email the user's own email address. setMarker takes this to make the user's own marker blue instead of red.
      */
-    public static void setMarker(DataSnapshot dataSnapshot, HashMap<String, Marker> markers, GoogleMap map) {
+    public static void setMarker(DataSnapshot dataSnapshot, HashMap<String, Marker> markers, GoogleMap map, String email) {
         // When a location update is received, put, update, or remove
         // its value in mMarkers, which contains all the markers
         // for locations received, so that we can build the
@@ -43,6 +45,10 @@ public class MapUtils {
             //If the location of an already online user (marker) is updated, just set the marker to new location.
         } else {
             markers.get(key).setPosition(location);
+        }
+
+        if(markers.containsKey(FirebaseUtils.extractUsersNameFromNcfEmail(email))){
+            markers.get(FirebaseUtils.extractUsersNameFromNcfEmail(email)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         }
 
         // LatLngBounds.Builder takes in a bunch of markers and focuses the map to display all of them at once.

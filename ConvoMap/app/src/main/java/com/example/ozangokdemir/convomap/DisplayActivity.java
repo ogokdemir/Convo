@@ -1,47 +1,18 @@
 package com.example.ozangokdemir.convomap;
 
-import android.Manifest;
-import android.app.NotificationManager;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.transition.TransitionManager;
-import android.util.Log;
 import android.widget.Toast;
-
 import com.example.ozangokdemir.convomap.utils.FirebaseUtils;
 import com.example.ozangokdemir.convomap.utils.MapUtils;
-import com.example.ozangokdemir.convomap.utils.NotificationUtils;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
 
 public class DisplayActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -66,8 +37,6 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         mEmail = passedPackage[0];
         mPassword = passedPackage[1];
 
-
-
     }
 
     @Override
@@ -82,7 +51,10 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         firebaseUtils.loginToFirebase(mEmail, mPassword);
 
         mMap.setOnMarkerClickListener(this);
+
     }
+
+
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
@@ -102,22 +74,19 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
        else{
 
            LatLng usersLocation = usersMarker.getPosition();
-
-           Log.d("TAPPED", String.valueOf(tappedLocation));
-           Log.d("USERS", String.valueOf(usersLocation));
-
            float[] distance = new float[1];
            Location.distanceBetween(tappedLocation.latitude, tappedLocation.longitude,
                    usersLocation.latitude, usersLocation.longitude, distance);
 
            double distMiles = MapUtils.distMeterstoMiles(distance[0]);
-
            marker.setSnippet("Your distance: "+ String.valueOf(distMiles)+ " miles");
 
        }
 
+        //Displays the name and snipped on marker tap.
         marker.showInfoWindow();
-        GoogleMapOptions options = new GoogleMapOptions().mapToolbarEnabled(true);
+
+        //If this does not return false the map toolbar does not show.
         return false;
     }
 }
