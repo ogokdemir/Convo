@@ -89,6 +89,8 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         //If this does not return false the map toolbar does not show.
         return false;
     }
+
+
 }
 
 
