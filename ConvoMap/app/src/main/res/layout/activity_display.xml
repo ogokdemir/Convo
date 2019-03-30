@@ -24,7 +24,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/fab_icon_last"
         android:contentDescription="Post-Conversation Survey"
-        app:backgroundTint="#ffffff"
+        app:backgroundTint="#ffa500"
 
         />
 
