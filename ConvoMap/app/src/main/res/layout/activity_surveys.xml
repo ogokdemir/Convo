@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SurveysActivity"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+
+        <TextView
+            android:id="@+id/tw_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/playfair_display"
+            android:textStyle="bold"
+            android:text="TextView"
+            android:textSize="32sp"
+            android:gravity="center_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/tw_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp"
+            android:fontFamily="@font/playfair_display"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pre-Study Surveys"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/playfair_display"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            />
+
+
+
+        <Button
+            android:id="@+id/btn_happiness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/self_reported_happiness"
+            />
+
+        <Button
+            android:id="@+id/btn_loneliness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/self_reported_loneliness"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post-Conversation Survey"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/playfair_display"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            />
+
+        <Button
+            android:id="@+id/btn_post_conversation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/post_conversation_survey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post-Conversation Survey"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/playfair_display"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            />
+
+        <Button
+            android:id="@+id/btn_post_study"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/post_study_survey"
+            />
+
+    </LinearLayout>
+</ScrollView>

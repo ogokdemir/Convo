@@ -7,5 +7,15 @@
     <string name="shared_prefs_key" translatable="false">login_credentials</string>
     <string name="email_cache_key" translatable="false">cached_email_key</string>
 
+    <string name="self_reported_loneliness">Self Reported Loneliness Survey</string>
+    <string name="self_reported_happiness">Self Reported Happiness Survey</string>
+    <string name="post_conversation_survey">Post Conversation Survey</string>
+    <string name="post_study_survey">Post Study Survey</string>
+
+    <string name="uri_happiness">https://www.surveymonkey.com/r/7C97VD5</string>
+    <string name="uri_loneliness_survey">https://www.surveymonkey.com/r/6SJL9HP</string>
+    <string name="uri_post_conversation">https://www.surveymonkey.com/r/LBTBRQS</string>
+    <string name="uri_post_study">https://www.surveymonkey.com/r/923BS7Q</string>
+
 
 </resources>

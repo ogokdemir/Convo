@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.UUID;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText mEtEmail, mEtPassword;
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //If there is a cached email, retrieve it and put it in the email input box for user's convenience (remember me kinda thing).
         String emailCache=prefs.getString(getResources().getString(R.string.email_cache_key), "");
         mEtEmail.setText(emailCache);
+
 
 
     }

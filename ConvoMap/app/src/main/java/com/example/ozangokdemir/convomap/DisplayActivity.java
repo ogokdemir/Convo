@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.ozangokdemir.convomap.utils.FirebaseUtils;
 import com.example.ozangokdemir.convomap.utils.MapUtils;
+import com.example.ozangokdemir.convomap.utils.NotificationUtils;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,7 +27,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
     public static final String INTENT_RECEIVE_KEY = "mjollnir";
     private FirebaseUtils firebaseUtils; // a class that I wrote for keeping the firebase outside of the activity.
     String mEmail, mPassword;
-    FloatingActionButton mFab;
+    FloatingActionButton mFabSurveys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +37,21 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Intent starter = getIntent();
+        final Intent starter = getIntent();
         String[] passedPackage = starter.getExtras().getStringArray(INTENT_RECEIVE_KEY);
         mEmail = passedPackage[0];
         mPassword = passedPackage[1];
 
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
+        mFabSurveys = (FloatingActionButton) findViewById(R.id.fab);
+
+        //When the user taps on the floating action button on the map, take them to the surveys activity.
+        mFabSurveys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("https://www.surveymonkey.com/r/LBTBRQS"); // the url for the post-conversation survey.
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                Intent toSurveys = new Intent(DisplayActivity.this, SurveysActivity.class);
+                String username = FirebaseUtils.extractUsersNameFromNcfEmail(mEmail).split(" ")[0];
+                toSurveys.putExtra("user_name", username);
+                startActivity(toSurveys);
             }
         });
 
@@ -64,7 +68,7 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
         //Login to firebase and start observing updates to display them on the map.
         firebaseUtils.loginToFirebase(mEmail, mPassword);
 
-        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMarkerClickListener(this); //set the marker listener.
 
     }
 
