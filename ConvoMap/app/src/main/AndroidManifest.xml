@@ -45,7 +45,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -55,7 +55,17 @@
             android:exported="true" />
 
         <activity android:name=".SurveysActivity" />
-        <activity android:name=".SplashScreenActivity"></activity>
+
+
+        <activity android:name=".SplashScreenActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
