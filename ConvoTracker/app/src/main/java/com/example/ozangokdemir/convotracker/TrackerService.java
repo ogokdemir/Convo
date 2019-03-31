@@ -1,9 +1,12 @@
 package com.example.ozangokdemir.convotracker;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -25,6 +28,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.Manifest;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -37,6 +41,11 @@ public class TrackerService extends Service {
     String mEmail, mPassword;
     FirebaseAuth mAuth;
     Boolean isTrackingStopped;
+
+    //Notification stuff.
+    private static final String CHANNEL_ID = "convotracker_notifications";
+    private static final String CHANNEL_NAME = "Convo Tracker";
+    private static final String CHANNEL_DESCRIPTION = "Currently tracking, tap to stop.";
 
     @Override
     public IBinder onBind(Intent intent) {return null;}
@@ -81,16 +90,32 @@ public class TrackerService extends Service {
         registerReceiver(stopReceiver, new IntentFilter(stop)); //start listening to data updates from the GPS.
 
 
+// Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = CHANNEL_NAME;
+            String description = CHANNEL_DESCRIPTION;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         //This pending intent will be activated when the user taps on the notification.
         PendingIntent broadcastIntent = PendingIntent.getBroadcast(
                 this, 0, new Intent(stop), PendingIntent.FLAG_UPDATE_CURRENT);
         // Create the persistent notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.notification_text))
                 .setOngoing(true)
                 .setContentIntent(broadcastIntent)
-                .setSmallIcon(R.drawable.ic_tracker);
+                .setSmallIcon(R.drawable.ic_tracker)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
         startForeground(1, builder.build());
     }
 
@@ -111,6 +136,7 @@ public class TrackerService extends Service {
 
         }
     };
+
 
     //Uses the member variables mEmail and mPassword to login to Firebase. These member variables are passed from the TrackerActivity.
     private void loginToFirebase() {
