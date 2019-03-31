@@ -54,7 +54,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SurveysActivity"></activity>
+        <activity android:name=".SurveysActivity" />
+        <activity android:name=".SplashScreenActivity"></activity>
     </application>
 
 </manifest>
