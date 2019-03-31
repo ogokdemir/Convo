@@ -6,6 +6,7 @@
     tools:context=".LoginActivity"
     android:padding="20dp"
     android:baselineAligned="false"
+    android:background="@color/colorPrimaryDark"
     >
 
     <LinearLayout
@@ -19,9 +20,11 @@
             android:text="Welcome! Please sign in with your Convo account."
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="22sp"
+            android:textSize="16sp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="40dp"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/rock_salt"
             />
 
         <EditText
@@ -29,7 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_signin_user_email"
             android:hint="Please enter your ncf email address..."
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="#ffffff"
             android:layout_marginBottom="10dp"
             />
 
@@ -38,9 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/et_signin_user_password"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="#ffffff"
             android:hint="Please enter your password"
             android:inputType="textPassword"
+
 
             />
 
@@ -58,7 +62,7 @@
             android:textStyle="bold"
             android:padding="8dp"
             android:clickable="true"
-
+            android:fontFamily="@font/rock_salt"
             />
 
 

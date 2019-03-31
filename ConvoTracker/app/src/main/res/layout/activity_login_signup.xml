@@ -6,6 +6,7 @@
     tools:context=".LoginSignupActivity"
     android:padding="20dp"
     android:baselineAligned="false"
+    android:background="@color/colorPrimaryDark"
     >
 
     <LinearLayout
@@ -22,6 +23,8 @@
         android:textSize="22sp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/rock_salt"
         />
 
         <EditText
@@ -29,7 +32,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_signin_user_email"
             android:hint="Please enter your email"
-            android:textColorHint="@color/colorPrimaryDark"
             android:layout_marginBottom="10dp"
             />
 
@@ -38,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/et_signin_user_password"
-            android:textColorHint="@color/colorPrimaryDark"
             android:hint="Please enter your password"
             android:inputType="textPassword"
 
@@ -58,7 +59,7 @@
             android:textStyle="bold"
             android:padding="8dp"
             android:clickable="true"
-            android:onClick="signInWithFirebase"
+            android:fontFamily="@font/rock_salt"
 
             />
 
@@ -74,10 +75,11 @@
         android:clickable="true"
         android:gravity="center"
         android:text="New to Convo? Please sign up"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="22sp"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
+        android:fontFamily="@font/rock_salt"
 
         />
 

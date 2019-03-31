@@ -22,10 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
         android:layout_margin="16dp"
-        android:src="@drawable/fab_icon_last"
+        android:src="@drawable/survey"
         android:contentDescription="Post-Conversation Survey"
-        app:backgroundTint="#ffa500"
-
+        android:backgroundTint="#00BCD4"
         />
 
 
