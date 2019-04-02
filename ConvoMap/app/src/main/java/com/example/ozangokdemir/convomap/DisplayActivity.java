@@ -117,8 +117,8 @@ public class DisplayActivity extends FragmentActivity implements OnMapReadyCallb
                ref.child(marker.getTitle()).addValueEventListener(new ValueEventListener() {
                    @Override
                    public void onDataChange(DataSnapshot snapshot) {
-                       HashMap<String, Object> markerHint =  (HashMap<String, Object>) snapshot.getValue();
-                       String hint = String.valueOf(markerHint.get("hint"));
+                       String hint =  String.valueOf(snapshot.getValue());
+                       //String hint = String.valueOf(markerHint.get("hint"));
 
                        //If they have a marker hint entered into the system display their hint and the distance to them.
                        if(hint!= null){

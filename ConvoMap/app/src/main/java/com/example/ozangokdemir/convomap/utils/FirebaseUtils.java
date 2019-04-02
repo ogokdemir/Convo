@@ -160,70 +160,12 @@ public class FirebaseUtils {
                 getReference("markerhints"+"/" + userTitle);
 
 
-
+        /*
         Map<String, Object> update = new HashMap<>();
         update.put("hint", tip);
-        statusDataRef.setValue(update);
+        */
+        statusDataRef.setValue(tip);
+
     }
+}
 
-
-    /*
-
-    /**
-     * This method starts listening to markerhint updates to the firebase database's markerhints table.
-     * recordUserMarkerTip method (above) rights to that table.
-     *
-     * This method will be called by the DisplayActivity onMapReady().
-     */
-
-    /*
-    public void subscribeToMarkerHintUpdates(){
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("markerhints");
-
-        ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                String userKey = dataSnapshot.getKey(); //name of the user that just added a marker hint.
-                HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
-                String hintText = String.valueOf(value.get("hint"));
-
-                if(mMarkers.containsKey(userKey)){
-                    mMarkers.get(userKey).setSnippet(hintText);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                String userKey = dataSnapshot.getKey(); //name of the user that just updated their marker hint.
-                HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
-                String hintText = String.valueOf(value.get("hint"));
-
-                if(mMarkers.containsKey(userKey)){
-                    mMarkers.get(userKey).setSnippet(hintText);
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-*/
-    }
-
-//}
