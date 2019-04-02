@@ -41,7 +41,10 @@ public class LoginSignupActivity extends AppCompatActivity implements View.OnCli
 
         //If there is a cached email, retrieve it and put it in the email input box for user's convenience (remember me kinda thing).
         String emailCache=prefs.getString(getResources().getString(R.string.email_cache_key), "");
+        String passwordCache = prefs.getString(getResources().getString(R.string.password_cache_key), "");
+
         mEtEmail.setText(emailCache);
+        mEtPassword.setText(passwordCache);
 
     }
 
@@ -76,8 +79,9 @@ public class LoginSignupActivity extends AppCompatActivity implements View.OnCli
                             if (task.isSuccessful()) {
 
 
-                                //Before moving on, cache the user's valid email address and remember it next time for convenience.
+                                //Before moving on, cache the user's valid email address and password and remember it next time for convenience.
                                 editor.putString(getString(R.string.email_cache_key), email);
+                                editor.putString(getString(R.string.password_cache_key), password);
                                 editor.commit();
 
                                 // Sign in success, direct the user to the TrackerActivity which will publish their location.

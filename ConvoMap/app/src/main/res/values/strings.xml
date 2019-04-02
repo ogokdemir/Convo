@@ -6,6 +6,7 @@
     <string name="firebase_path" translatable="false">locations</string>
     <string name="shared_prefs_key" translatable="false">login_credentials</string>
     <string name="email_cache_key" translatable="false">cached_email_key</string>
+    <string name="password_cache_key" translatable="false">cached_password_key</string>
 
     <string name="self_reported_loneliness">Self Reported Loneliness Survey</string>
     <string name="self_reported_happiness">Self Reported Happiness Survey</string>

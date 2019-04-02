@@ -35,15 +35,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         initWidgets();
 
-        mAuth = FirebaseAuth.getInstance(); //instantiate the firebase auth api reference.
+        mAuth = FirebaseAuth.getInstance(); //instantiate the Firebase auth api reference.
 
         //Initialize the shared preferences(app cache) reference and its editor.
         prefs = getSharedPreferences(getResources().getString(R.string.shared_prefs_key), 0);
         editor = prefs.edit();
 
-        //If there is a cached email, retrieve it and put it in the email input box for user's convenience (remember me kinda thing).
+        //If there is a cached email and password, retrieve it and put it in the email input box for user's convenience (remember me kinda thing).
         String emailCache=prefs.getString(getResources().getString(R.string.email_cache_key), "");
+        String passwordCache = prefs.getString(getResources().getString(R.string.password_cache_key), "");
         mEtEmail.setText(emailCache);
+        mEtPassword.setText(passwordCache);
 
 
 
@@ -92,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 //first, cache this valid email address and remember it for the next time the user enters the app.
                                 editor.putString(getResources().getString(R.string.email_cache_key), email);
+                                editor.putString(getResources().getString(R.string.password_cache_key), password);
                                 editor.commit();
 
 
