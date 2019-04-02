@@ -1,6 +1,8 @@
 package com.example.ozangokdemir.convomap.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.ozangokdemir.convomap.R;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseUtils {
 
@@ -57,8 +60,8 @@ public class FirebaseUtils {
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
-                    subscribeToUpdates(mEmail); //subcribe to the database so that the map dipslays their locations.
-
+                    subscribeToLocationUpdates(mEmail); //subcribe to the database so that the map dipslays their locations.
+                    //subscribeToMarkerHintUpdates(); //subscribe to the database to display users' marker hints.
 
                     Toast.makeText(mContext, "Tap on the person you want to chat with and use the blue arrow icon on the bottom right!",
                             Toast.LENGTH_LONG).show();
@@ -77,7 +80,7 @@ public class FirebaseUtils {
      * Starts observing the database and updates the map accordingly.
      * @param email takes the email from the loginToFirebase method and passes it along to the MapUtils.setMarker method.
      */
-    public void subscribeToUpdates(final String email) {
+    public void subscribeToLocationUpdates(final String email) {
 
         //get a hold of the firebase database so that we can subscribe to changes in the location.
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(mContext.getString(R.string.firebase_path));
@@ -142,4 +145,85 @@ public class FirebaseUtils {
         return firstName+" "+lastName;
     }
 
-}
+
+    /**
+     * This method is called when the user wants to add a tip to their marker on the map. A tip is a little hint like
+     * "I'm under the banyan tree" or "I'm wearing a blue shirt." This method writes the tip under the statuses table.
+     *
+     * @param email email address of the user that just added this tip their marker.
+     * @param tip the text for the tip.
+     */
+    public static void recordUserMarkerTip(String email, String tip){
+        String userTitle = extractUsersNameFromNcfEmail(email);
+
+        DatabaseReference statusDataRef = FirebaseDatabase.getInstance().
+                getReference("markerhints"+"/" + userTitle);
+
+
+
+        Map<String, Object> update = new HashMap<>();
+        update.put("hint", tip);
+        statusDataRef.setValue(update);
+    }
+
+
+    /*
+
+    /**
+     * This method starts listening to markerhint updates to the firebase database's markerhints table.
+     * recordUserMarkerTip method (above) rights to that table.
+     *
+     * This method will be called by the DisplayActivity onMapReady().
+     */
+
+    /*
+    public void subscribeToMarkerHintUpdates(){
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("markerhints");
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                String userKey = dataSnapshot.getKey(); //name of the user that just added a marker hint.
+                HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
+                String hintText = String.valueOf(value.get("hint"));
+
+                if(mMarkers.containsKey(userKey)){
+                    mMarkers.get(userKey).setSnippet(hintText);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                String userKey = dataSnapshot.getKey(); //name of the user that just updated their marker hint.
+                HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
+                String hintText = String.valueOf(value.get("hint"));
+
+                if(mMarkers.containsKey(userKey)){
+                    mMarkers.get(userKey).setSnippet(hintText);
+                }
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+*/
+    }
+
+//}

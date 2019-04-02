@@ -47,6 +47,7 @@ public class MapUtils {
             markers.get(key).setPosition(location);
         }
 
+        //If the user is active as they are looking at the map, distinguish their marker by painting it blue instead of red.
         if(markers.containsKey(FirebaseUtils.extractUsersNameFromNcfEmail(email))){
             markers.get(FirebaseUtils.extractUsersNameFromNcfEmail(email)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         }

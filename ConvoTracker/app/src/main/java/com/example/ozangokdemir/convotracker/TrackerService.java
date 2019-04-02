@@ -34,6 +34,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TrackerService extends Service {
 
     private static final String TAG = TrackerService.class.getSimpleName();
@@ -42,7 +45,7 @@ public class TrackerService extends Service {
     FirebaseAuth mAuth;
     Boolean isTrackingStopped;
 
-    //Notification stuff.
+    //Notification stuff for Android 8 (Oreo) and above.
     private static final String CHANNEL_ID = "convotracker_notifications";
     private static final String CHANNEL_NAME = "Convo Tracker";
     private static final String CHANNEL_DESCRIPTION = "Currently tracking, tap to stop.";
@@ -173,6 +176,7 @@ public class TrackerService extends Service {
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
+
         //if they did
         if (permission == PackageManager.PERMISSION_GRANTED) {
             // Request location updates and when an update is
@@ -186,13 +190,13 @@ public class TrackerService extends Service {
                     //get the latest location result from this device's location manager.
                     Location location = locationResult.getLastLocation();
 
+
                     //if the location is not null, i.e., the location manager actually gave us some data.
                     if (location != null && !isTrackingStopped) {
                         Log.d(TAG, "location update " + location);
 
                         //set the value of the location path in the realtime database to the latest location.
                         ref.setValue(location);
-
                     }
                 }
             }, null);
